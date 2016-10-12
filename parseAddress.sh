@@ -57,7 +57,10 @@ addresses=$(grep $binaryImage ${error_file} | grep -o "0x[0-9a-f]*")
 for i in $addresses; do
 	{
 		printf "addresses: %s\n" $i  
-		dwarfdump --arch=$arch --lookup $i "$dSYMPath" | grep "AT_name\|Line table file" 
+		dwarfdump --arch=$arch --lookup $i "$dSYMPath" | grep "AT_name\|Line table file"
+		if [[ $? -ne 0 ]]; then
+		 	atos -o "$dSYMPath"/Contents/Resources/DWARF/$binaryImage -arch $arch $i
+		 fi 
 		printf "\n\n" 		
 	} >> $result_file	
 done
