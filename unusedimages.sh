@@ -1,6 +1,7 @@
 #!/bin/bash
 ##author: zhoujie<13456774460@139.com>
 ##查找xcdoe iOS APP项目xcassets中不再使用的图片
+##这个sh依赖于ag命令：https://github.com/ggreer/the_silver_searcher
 
 #ls
 #-R      Recursively list subdirectories encountered
@@ -37,7 +38,7 @@ unusedImages=unusedImages.txt
 #--ignore-dir NAME    Alias for --ignore for compatibility with ack.
 
 for i in $images; do
-	ag --case-sensitive --ignore $unusedImages --ignore-dir "Images.xcassets" "$i" './'
+	ag --case-sensitive --ignore $unusedImages --ignore-dir "*.xcassets" "$i" './'
 	if [[ $? -ne 0 ]]; then
 		echo "$i" >> $unusedImages
 	fi
