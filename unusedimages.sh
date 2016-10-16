@@ -37,8 +37,8 @@ unusedImages=unusedImages.txt
 #                          (literal file/directory names also allowed)
 #--ignore-dir NAME    Alias for --ignore for compatibility with ack.
 
-for i in $images; do
-	ag --case-sensitive --ignore $unusedImages --ignore-dir "*.xcassets" "$i" './'
+time for i in $images; do
+	ag -Q --case-sensitive --ignore $unusedImages --ignore-dir "*.xcassets" "$i" './'
 	if [[ $? -ne 0 ]]; then
 		echo "$i" >> $unusedImages
 	fi
