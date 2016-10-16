@@ -26,10 +26,10 @@ arch=$( grep "CPU Type: arm[0-9]*"  ${error_file} | grep -o "arm[v]*[0-9]*" )
 echo "CPU Type: " $arch
 
 ##提取UUID
-uuid_in_error=$( grep "dSYM UUID: "  ${error_file} | grep -o "[0-9A-F]\{1,\}-[0-9A-F]\{1,\}-[0-9A-F]\{1,\}-[0-9A-F]\{1,\}-[0-9A-F]\{1,\}")
+uuid_in_error=$( grep "dSYM UUID: "  ${error_file} | grep -o -E "[0-9A-F]+-[0-9A-F]+-[0-9A-F]+-[0-9A-F]+-[0-9A-F]+" )
 echo "uuid_in_error: " $uuid_in_error
 
-uuid_in_dSYM=$(dwarfdump --arch=$arch --uuid $dSYMPath | grep -o "[0-9A-F]\{1,\}-[0-9A-F]\{1,\}-[0-9A-F]\{1,\}-[0-9A-F]\{1,\}-[0-9A-F]\{1,\}")
+uuid_in_dSYM=$(dwarfdump --arch=$arch --uuid $dSYMPath | grep -o -E "[0-9A-F]+-[0-9A-F]+-[0-9A-F]+-[0-9A-F]+-[0-9A-F]+" )
 echo "uuid_in_dSYM:  " $uuid_in_dSYM
 
 ##比较UUID
