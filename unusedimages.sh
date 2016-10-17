@@ -28,12 +28,19 @@ images=$( ls -R -l | grep "^d" | grep "\.imageset" | grep -o ":\d\d .\+\.imagese
 unusedImages=unusedImages.txt
 > $unusedImages
 
+##对误中代码块进行处理
+#########################################################
+printf "请注意误查找:[UIImage imageNamed:[NSString stringWithFormat:\n" >> $unusedImages
+time ag -o 'imageNamed.+Format.+"' './' | sed -n -E 's/(.*@")(.*)(")/\2/p' | sort -u >> $unusedImages
+printf "\n\n">> $unusedImages
+#########################################################
+
 #ag
 #A code-searching tool similar to ack, but faster. http://geoff.greer.fm/ag/
 #https://github.com/ggreer/the_silver_searcher
 
 #--case-sensitive     Match case sensitively
-#---ignore PATTERN     Ignore files/directories matching PATTERN
+#---ignore PATTERN    Ignore files/directories matching PATTERN
 #                          (literal file/directory names also allowed)
 #--ignore-dir NAME    Alias for --ignore for compatibility with ack.
 
@@ -43,7 +50,6 @@ time for i in $images; do
 		echo "$i" >> $unusedImages
 	fi
 done
-
 
 
 ##误中
