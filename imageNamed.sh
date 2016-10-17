@@ -29,5 +29,5 @@ rm imageNamed.txt
 
 optExclude="--exclude=$progname --exclude=*.h --exclude=*.xcassets --exclude=*.lproj --exclude=*.html --exclude=*.plist"
 
-time grep -r -o --no-filename $optExclude 'imageNamed:@".*"]' * | grep -o '".\+"' | sort -u >imageNamed.txt
+time grep -r -o --no-filename $optExclude 'imageNamed:@".*"]' * | grep -o -E '".+"' | sort -u >imageNamed.txt
 
