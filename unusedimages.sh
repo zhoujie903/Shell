@@ -43,3 +43,24 @@ time for i in $images; do
 		echo "$i" >> $unusedImages
 	fi
 done
+
+
+
+##误中
+
+##代码：battery_cell_night_%@
+    # UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"battery_cell_night_%d",level]];
+
+##代码：day_fonts_%@_click, day_fonts_%@_down, day_fonts_%@_normal
+    # [UIImage imageNamed:[NSString stringWithFormat:@"day_fonts_%@_click", fontID]
+    # [UIImage imageNamed:[NSString stringWithFormat:@"day_fonts_%@_normal", fontID]
+
+##代码：night_fonts_%@_normal, night_fonts_%@_click, night_fonts_%@_down
+	# [UIImage imageNamed:[NSString stringWithFormat:@"night_fonts_%@_normal", fontID]
+
+##代码：speech_tone_%@_disable, speech_tone_%@_default
+	# [UIImage imageNamed:[NSString stringWithFormat:@"speech_tone_%@_default", param]]
+	# [UIImage imageNamed:[NSString stringWithFormat:@"speech_tone_%@_disable", param]]
+
+##代码：load_ic_loading_%ld
+	# [UIImage imageNamed:[NSString stringWithFormat:@"load_ic_loading_%ld",(unsigned long)i]]
