@@ -22,18 +22,15 @@
 #截取出图片文件名
 #结果：personal_cell_icon_ticket
 
-images=$( ls -R -l | grep "^d" | grep "\.imageset" | grep -o ":\d\d .\+\.imageset" | sed -n -e "s/:[0-9][0-9] //;s/\.imageset$//gp" )
+images=$( ls -R -l | grep "^d" | grep "\.imageset" | grep -o -E ":\d\d .+\.imageset" | sed -n -e "s/:[0-9][0-9] //;s/\.imageset$//gp" )
 
 ##清空文件
 unusedImages=unusedImages.txt
 > $unusedImages
 
-##对误中代码块进行处理
-#########################################################
-printf "请注意误查找:[UIImage imageNamed:[NSString stringWithFormat:\n" >> $unusedImages
-time ag -o 'imageNamed.+Format.+"' './' | sed -n -E 's/(.*@")(.*)(")/\2/p' | sort -u >> $unusedImages
-printf "\n\n">> $unusedImages
-#########################################################
+##脚本名字
+progname=${0##*/} ## Get the name of the script without its path
+
 
 #ag
 #A code-searching tool similar to ack, but faster. http://geoff.greer.fm/ag/
@@ -45,12 +42,18 @@ printf "\n\n">> $unusedImages
 #--ignore-dir NAME    Alias for --ignore for compatibility with ack.
 
 time for i in $images; do
-	ag -Q --case-sensitive --ignore $unusedImages --ignore-dir "*.xcassets" "$i" './'
+	ag -Q --case-sensitive --ignore $unusedImages --ignore $progname --ignore-dir "*.xcassets" "$i" './'
 	if [[ $? -ne 0 ]]; then
 		echo "$i" >> $unusedImages
 	fi
 done
 
+##对误中代码块进行处理
+#########################################################
+printf "请注意误查找:[UIImage imageNamed:[NSString stringWithFormat:\n" >> $unusedImages
+time ag -o --ignore $progname 'imageNamed.+Format.+"' './' | sed -n -E 's/(.*@")(.*)(")/\2/p' | sort -u >> $unusedImages
+printf "\n\n">> $unusedImages
+#########################################################
 
 ##误中
 
