@@ -1,4 +1,7 @@
 #!/usr/local/bin/bash
+##author: zhoujie<13456774460@139.com>
+##Localizable.strings文件中字符串替换掉代码文件中字符串为NSLocalizedString(@“key”, nil)
+
 
 ##调试开关
 #set -x
@@ -34,6 +37,6 @@ done
 
 for (( i = 0; i < ${#ss[@]}; i++ )); do
 	#echo ${ss[${i}]} 
-	sed -i -e "s/${ss[${i}]}/NSLocalizedString(@${kk[${i}]}, nil)/" "/Users/zhoujie/Documents/CMRead-iPhone/CMRead-iPhone/Personal/CMBindPhoneNumberViewController.m" 
+	sed -i -e "s/@${ss[${i}]}/NSLocalizedString(@${kk[${i}]}, nil)/" *.m
 done
 
