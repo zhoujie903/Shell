@@ -11,60 +11,33 @@
 declare -a ss
 declare -a kk
 
-values_file=values_by_shell.txt
-keys_file=keys_by_shell.txt 
 
-function removeTempFiles() {
-    echo "--------------"
-    rm $values_file
-    rm $keys_file
-}
-
-#提取values
+echo "正在建立keys和values..."
+##建立keys和values
+##tip:Placing an assignment in front of a command causes it to be local to that command and does not change its value elsewhere in the script.
 ##############################################################
-sed -n -e 's/\(.*=\s*\)\(".*"\);/\2/p' $1 >$values_file
-printf "\n" >>$values_file
-count_values=$(cat ./$values_file|wc -l)
-printf "values:%s\n" ${count_values}
-##############################################################
-
-
-#提取keys
-##############################################################
-sed -n -e 's/\(".*"\)\(\s*=\s*.*;\)/\1/p'  $1 >$keys_file
-printf "\n" >>$keys_file
-count_keys=$(cat ./$keys_file|wc -l)
-printf "keys:%s\n" ${count_keys}
+while IFS="=" read key value
+do
+    key=$( printf "%s" "${key}" | sed -n -E 's/(\s*)(".*")(\s*)/\2/p' );
+    value=$( printf "%s" "${value}" | sed -n -E 's/(\s*)(".*")(;)/\2/p' )
+    if [[ "${key}" == '""' || -z "${key}" || "${value}" == '""' || -z "${value}" ]]; then
+        :  #do nothing    
+    else
+        ss[${#ss[@]}]=${value};
+        kk[${#kk[@]}]=${key};
+        #printf "key:|%s| -- value:|%s|\n" "$key" "$value"
+    fi
+    key=""
+    value=""
+done < "$1"
+#echo IFS $IFS
 ##############################################################
 
 
-if [[ $count_values != $count_keys ]]; then
+if [[ ${#ss[@]} != ${#kk[@]} ]]; then
     echo "键与值数量不相等"
-    removeTempFiles;
     exit -1
 fi
-
-
-##############################################################
-n=1  
-while ((n<=${count_values}))  
-do  
-    ss[$n]=$(cat $values_file | sed -n "${n}p" ) 
-    #printf "|%s|\n" "${ss[$n]}"
-    ((n+=1))      
-done
-##############################################################
-
-
-##############################################################
-n=1  
-while ((n<=${count_keys}))  
-do  
-    kk[$n]=$(cat $keys_file | sed -n "${n}p" ) 
-    #printf "|%s|\n" "${kk[$n]}"
-    ((n+=1))      
-done
-##############################################################
 
 
 #建立字典：
@@ -82,12 +55,11 @@ for (( i = 0; i < ${#ss[@]}; i++ )); do
     #printf "正在替换:|%s|\n" "${kk[$i]}"
     if [[ "${kk[$i]}" == '""' || -z "${kk[$i]}" ]]; then
         :  #do nothing    
-    else
+    else        
         printf "正在替换:|%s| --> |%s|\n" "${ss[${i}]}" "${kk[${i}]}"
         sed -i -e "s/@${ss[${i}]}/NSLocalizedString(@${kk[${i}]}, nil)/" *.m
     fi
 done
 ##############################################################
 
-
-removeTempFiles;
+echo done!!!
