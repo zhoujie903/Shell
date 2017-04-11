@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env bash
 ##author: zhoujie<13456774460@139.com>
 ##Localizable.strings文件中字符串替换掉代码文件中字符串为NSLocalizedString(@“key”, nil)
 
