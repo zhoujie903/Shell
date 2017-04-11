@@ -26,7 +26,7 @@ images=$( ls -R -l | grep "^d" | grep "\.imageset" | grep -o -E ":\d\d .+\.image
 
 ##清空文件
 unusedImages=unusedImages.txt
-> $unusedImages
+: > $unusedImages
 
 ##脚本名字
 progname=${0##*/} ## Get the name of the script without its path
@@ -42,8 +42,8 @@ progname=${0##*/} ## Get the name of the script without its path
 #--ignore-dir NAME    Alias for --ignore for compatibility with ack.
 
 time for i in $images; do
-	ag -Q --case-sensitive --ignore $unusedImages --ignore $progname --ignore-dir "*.xcassets" "$i" './'
-	if [[ $? -ne 0 ]]; then
+	if ! ag -Q --case-sensitive --ignore $unusedImages --ignore $progname --ignore-dir "*.xcassets" "$i" './';
+	then
 		echo "$i" >> $unusedImages
 	fi
 done
