@@ -19,21 +19,11 @@ function rand() {
 function create_migu_phones () {
 	echo "生成咪咕通信录:${miguSortedFile}......."
 
-	local readonly miguFile=all_migu.txt
-
-	>${miguFile}
-
-	##找出所有子公司目录下的sorted_all.txt文件
-	##并读取内容写入到temp.txt
+	##找出所有子公司目录下的sorted_all.txt文件	
 	local company=$(find . -mindepth 1 -name sorted_all.txt);
-	for item in $company; do
-		cat $item >>${miguFile}
-	done
 
-	#排序咪咕号码
-	sort -u ${miguFile} > ${miguSortedFile}
-
-	rm ${miguFile}
+	##读取所有sorted_all.txt文件内容，并排序和剔除重复号码，最后写入${miguSortedFile}文件
+	cat $company | sort -u > ${miguSortedFile} 
 } 
 
 
