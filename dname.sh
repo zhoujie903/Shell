@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 case $1 in
 	*/* ) printf "%s\n" "${1%/*}"
 		;;

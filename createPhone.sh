@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #这个脚本的作用是：把咪咕网站上的通信录里的json格式手机号提取为和彩漫的xxxxxxxx|xxxxxxxx格式的通信录文件
 
 progname=${0##*/} ## Get the name of the script without its path

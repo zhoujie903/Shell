@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #test function
 
 function testFunction

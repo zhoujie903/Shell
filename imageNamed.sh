@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #查找imageNamed:@".*"，排序，去重
 

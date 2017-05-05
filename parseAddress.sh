@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ##author: zhoujie<13456774460@139.com>
 ##用来把友盟中的错误地址转换为符号
 

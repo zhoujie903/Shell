@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ##author: zhoujie<13456774460@139.com>
 ##这个脚本的作用是：生成咪咕彩漫的xxxxxxxx|xxxxxxxx格式的通信录文件，并排除咪咕号码
 
