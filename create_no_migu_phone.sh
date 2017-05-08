@@ -89,7 +89,6 @@ function comm_months_and_migu_phones () {
 comm_months_and_migu_phones
 
 rm ${randSortedFile}
-find . -name "*.json" -exec rm {} \;
 
 echo Done!!!
  
