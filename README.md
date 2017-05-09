@@ -5,3 +5,5 @@
 * [Linux命令搜索](https://jaywcjlove.github.io/linux-command/)
 * [explainshell](https://explainshell.com/)
 
+## 说明
+* [create_no_migu_phone.sh](http://www.jianshu.com/p/f67504ea109d)
