@@ -6,13 +6,13 @@ node_xj = require("xls-to-json");
 var fs = require('fs');
 var path = require('path');
 
-var walk = function (dir, done) {
-    var results = [];
+let walk = function (dir, done) {
+    let results = [];
     fs.readdir(dir, function (err, list) {
         if (err) return done(err);
-        var i = 0;
+        let i = 0;
         (function next() {
-            var file = list[i++];
+            let file = list[i++];
             if (!file) return done(null, results);
             file = dir + '/' + file;
             fs.stat(file, function (err, stat) {
@@ -32,9 +32,9 @@ var walk = function (dir, done) {
 
 walk(process.cwd(), function (err, files) {
 
-    var allPhones = [];
+    let allPhones = [];
     files.forEach(function (file) {
-        var ext = path.extname(file);
+        const ext = path.extname(file);
         if (ext === '.xls') {
 
             node_xj({
@@ -53,7 +53,7 @@ walk(process.cwd(), function (err, files) {
         }
     });
 
-    var sorted_all_file = 'sorted_all.txt';
+    const sorted_all_file = 'sorted_all.txt';
     if (fs.existsSync(sorted_all_file)) {
         fs.unlinkSync(sorted_all_file);
     }
@@ -62,8 +62,8 @@ walk(process.cwd(), function (err, files) {
         function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
-        var sorted = allPhones.sort();
-        var unique = sorted.filter(onlyUnique);
+        const sorted = allPhones.sort();
+        const unique = sorted.filter(onlyUnique);
         unique.forEach(function (item) {
             fs.appendFileSync(sorted_all_file, item + '|' + item + '\n');
         });
