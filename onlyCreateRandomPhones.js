@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-function createRandomPhones(min, max, count) {
+const createRandomPhones = (min, max, count) => {
     let phones = [];
     const d = max - min + 1;
     while (phones.length < count) {
@@ -9,58 +9,41 @@ function createRandomPhones(min, max, count) {
             phones.push(randonNum);
         }
     }
-    return phones;   
-}
+    return phones;    
+} 
 
 //移动号码段
 ///////////////////////////////////////////////////
-const r1340_1348 = {
-    min:13400000000,
-    max:13489999999,
-    ratio:1
-};
+function RangePhone(min, max, ratio) {
+    this.min = min;
+    this.max = max;
+    this.ratio = ratio;
+}
 
-const r135_139 = {
-    min:13500000000,
-    max:13999999999,
-    ratio:5
-};
+const r1340_1348 = new RangePhone(13400000000, 13489999999, 1);
 
-const r150_152 = {
-    min:15000000000,
-    max:15299999999,
-    ratio:3
-}; 
+const r135_139 = new RangePhone(13500000000, 13999999999, 5);
 
-const r157_159 = {
-    min:15700000000,
-    max:15999999999,
-    ratio:3
-};
+const r150_152 = new RangePhone(15000000000, 15299999999, 3);
 
-const r182_184 = {
-    min:18200000000,
-    max:18499999999,
-    ratio:3
-};
+const r157_159 = new RangePhone(15700000000, 15999999999, 3);
 
-const r187_188 = {
-    min:18700000000,
-    max:18899999999,
-    ratio:3
-};
+const r182_184 = new RangePhone(18200000000, 18499999999, 3);
+
+const r187_188 = new RangePhone(18700000000, 18899999999, 3);
+
 ///////////////////////////////////////////////////
 
+const mobileRanges = [r1340_1348, r135_139, r150_152, r157_159, r182_184, r187_188];
 
 const totalCount = 3000;
-const totalRatio = r1340_1348.ratio + r135_139.ratio + r150_152.ratio + r157_159.ratio + r182_184.ratio + r187_188.ratio;
+const totalRatio = mobileRanges.reduce( (accumulator, currentValue) => {return accumulator + currentValue.ratio },0);
 
 //按各个手机号码段所占比例，生成总共totalCount个随机号码
 let phones = [];
-const mobileRanges = [r1340_1348, r135_139, r150_152, r157_159, r182_184, r187_188];
-mobileRanges.forEach(function (item) {
-    const min = item.min;
-    const max = item.max;
+
+mobileRanges.forEach( (item) => {
+    const {min, max} = item;//对象的解构赋值
     let count = Math.floor(item.ratio / totalRatio * totalCount); 
     let sorted = createRandomPhones(min, max, count);
     phones = phones.concat(sorted);
@@ -75,5 +58,5 @@ if( fs.existsSync(file) ) {
 //把随机号码排序并写入文件
 let sorted = phones.sort(); 
 sorted.forEach(function (item) {
-    fs.appendFileSync(file, item + '|' + item + '\n');
+    fs.appendFileSync(file, `${item}|${item}\n`);//``//模板字符串 
 });
