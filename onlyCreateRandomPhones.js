@@ -14,11 +14,13 @@ const createRandomPhones = (min, max, count) => {
 
 //移动号码段
 ///////////////////////////////////////////////////
-function RangePhone(min, max, ratio) {
-    this.min = min;
-    this.max = max;
-    this.ratio = ratio;
-}
+class RangePhone {
+    constructor(min, max, ratio) {
+        this.min = min;
+        this.max = max;
+        this.ratio = ratio;
+    }
+} 
 
 const r1340_1348 = new RangePhone(13400000000, 13489999999, 1);
 
@@ -30,7 +32,7 @@ const r157_159 = new RangePhone(15700000000, 15999999999, 3);
 
 const r182_184 = new RangePhone(18200000000, 18499999999, 3);
 
-const r187_188 = new RangePhone(18700000000, 18899999999, 3);
+const r187_188 = new RangePhone(18700000000, 18899999999, 2);
 
 ///////////////////////////////////////////////////
 
