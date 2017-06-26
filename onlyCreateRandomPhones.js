@@ -16,9 +16,10 @@ const createRandomPhones = (min, max, count) => {
 ///////////////////////////////////////////////////
 class RangePhone {
     constructor(min, max, ratio) {
-        this.min = min;
-        this.max = max;
-        this.ratio = ratio;
+        // this.min = min;
+        // this.max = max;
+        // this.ratio = ratio;
+        Object.assign(this, {min, max, ratio});
     }
 } 
 
