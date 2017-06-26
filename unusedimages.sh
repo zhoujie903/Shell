@@ -3,6 +3,9 @@
 ##查找xcdoe iOS APP项目xcassets中不再使用的图片
 ##这个sh依赖于ag命令：https://github.com/ggreer/the_silver_searcher
 
+
+#得到图片名字列表 方法一
+#################################################################################################
 #ls
 #-R      Recursively list subdirectories encountered
 #-l      List in long format.
@@ -22,7 +25,23 @@
 #截取出图片文件名
 #结果：personal_cell_icon_ticket
 
-images=$( ls -R -l | grep "^d" | grep "\.imageset" | grep -o -E ":\d\d .+\.imageset" | sed -n -e "s/:[0-9][0-9] //;s/\.imageset$//gp" )
+#images=$( ls -R -l | grep "^d" | grep "\.imageset" | grep -o -E ":\d\d .+\.imageset" | sed -n -e "s/:[0-9][0-9] //;s/\.imageset$//gp" )
+#################################################################################################
+
+#得到图片名字列表 方法二
+#################################################################################################
+#find .  -type d -name "*.imageset"
+#结果：./CMRead-iPhone/Images.xcassets/AppTintColor/app_disabled_color.imageset
+
+#sed -n -E 's/(.*\/)//;
+#结果：app_disabled_color.imageset
+
+#sed -n -E 's/(.*\/)//;
+#结果：app_disabled_color
+
+images=$(find .  -type d -name "*.imageset" | sed -n -E 's/(.*\/)//; s/(\.imageset$)//p;')
+#################################################################################################
+
 
 ##清空文件
 unusedImages=unusedImages.txt
