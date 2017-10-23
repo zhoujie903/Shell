@@ -38,6 +38,9 @@
 
 #sed -n -E 's/(.*\/)//;
 #结果：app_disabled_color
+#-n, --quiet, --silent
+#       suppress automatic printing of pattern space
+#-E
 
 images=$(find .  -type d -name "*.imageset" | sed -n -E 's/(.*\/)//; s/(\.imageset$)//p;')
 #################################################################################################
