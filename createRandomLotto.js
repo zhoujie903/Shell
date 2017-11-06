@@ -1,3 +1,18 @@
+//过滤规则：前区中有5个都是奇数，丢弃
+const filter_OddNumber = (item) => {
+    //console.log("filter_OddNumber");
+    let a = item.firt;
+    const odd0 = a[0] % 2 == 1;
+    const odd1 = a[1] % 2 == 1;
+    const odd2 = a[2] % 2 == 1;
+    const odd3 = a[3] % 2 == 1;
+    const odd4 = a[4] % 2 == 1;
+    if (odd0 && odd1 && odd2 && odd3 && odd4) {
+        return null;
+    }
+    return item;
+}
+
 //过滤规则：前区中有4个连号时，丢弃
 const filter_sequential4 = (item) => {
     //console.log("filter_sequential4");
@@ -36,7 +51,9 @@ const filter_Between10And20 = (item) => {
 const rules = [
     filter_sequential4, 
     filter_LessThan10, 
-    filter_Between10And20,];
+    filter_Between10And20,
+    filter_OddNumber];
+
 const filter = (rules, item) => {
 
     for (var index = 0; index < rules.length; index++) {
@@ -85,13 +102,19 @@ function createItem()
 const createLotto = (count) => {
     let numbers = [];
     let c = count;
+    let tryCount = 20;
     while (c > 0) {
         let item = createItem(); 
         item = filter(rules, item);
         if ( item !== null) {
             numbers.push(item);
             c = c - 1;
-        }        
+        } else {
+            tryCount = tryCount - 1;
+            if (tryCount <= 0) {
+                break;
+            }
+        }       
     }
 
     return numbers
