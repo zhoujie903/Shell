@@ -1,3 +1,12 @@
+////过滤规则：第1个大于15，丢弃
+const filter_first_great_15 = (item) => {
+    let a = item.firt;
+    if (a[0] >= 15) {
+        return null
+    }
+    return item
+}
+
 //过滤规则：前区中有5个都是奇数，丢弃
 const filter_OddNumber = (item) => {
     //console.log("filter_OddNumber");
@@ -52,7 +61,8 @@ const rules = [
     filter_sequential4, 
     filter_LessThan10, 
     filter_Between10And20,
-    filter_OddNumber];
+    filter_OddNumber,
+    filter_first_great_15];
 
 const filter = (rules, item) => {
 
@@ -127,7 +137,7 @@ function padNumber(value) {
 //生成彩票，并格式化输出
 //////////////////////////////////////////////////////////////////
 console.time("用时:")
-let a = createLotto(3);
+let a = createLotto(5);
 a.forEach(function (item) {
     let n1 = padNumber(item.firt[0]);
     let n2 = padNumber(item.firt[1]); 
