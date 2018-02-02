@@ -136,7 +136,7 @@ function padNumber(value) {
 
 //生成彩票，并格式化输出
 //////////////////////////////////////////////////////////////////
-console.time("用时:")
+console.time("用时")
 let a = createLotto(5);
 a.forEach(function (item) {
     let n1 = padNumber(item.firt[0]);
@@ -148,5 +148,5 @@ a.forEach(function (item) {
     let n7 = padNumber(item.last[1]); 
     console.log("%s %s %s %s %s + %s %s", n1, n2, n3, n4, n5, n6, n7);
 });
-console.timeEnd("用时:")
+console.timeEnd("用时")
 //////////////////////////////////////////////////////////////////
