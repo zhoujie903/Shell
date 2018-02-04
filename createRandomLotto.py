@@ -5,11 +5,11 @@ import random
 
 def createItem():
     """创建一注彩票"""
-    lottery_36 = range(36)
+    lottery_36 = range(1, 36)
     front_5 = random.sample(lottery_36, 5)
     front_5 = sorted(front_5)
 
-    lottery_12 = range(13)
+    lottery_12 = range(1, 13)
     end_2 = random.sample(lottery_12, 2)
     end_2 = sorted(end_2)
     print("%02d %02d %02d %02d %02d - %02d %02d" %
