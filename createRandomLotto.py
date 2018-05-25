@@ -31,5 +31,8 @@ def createLotto(count=5):
         item = createItem()
         output(item)
 
+def main():
+    createLotto(1)
 
-createLotto()
+if __name__ == "__main__":
+    main()
