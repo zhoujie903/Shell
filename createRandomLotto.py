@@ -3,36 +3,61 @@
 import random
 
 
-def output(item):
-    for n in item["firt"]:
-        print("%02d " % (n), end="")
-    print(" - ", end="")
-    for n in item["last"]:
-        print("%02d " % (n), end="")
-    print("\n")
+class Lotto(object):
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+        self.item = {}
+        self.createItem()
+
+    def __str__(self):
+        string = ""
+        for n in self.item["first"]:
+            string += "%02d " % (n)
+        string += "- "
+        for n in self.item["last"]:
+            string += "%02d " % (n)
+        return string
+
+    def createItem(self):
+        """创建一注彩票"""
+        r = range(1, self.first[0])
+        lottery_first = random.sample(r, self.first[1])
+        lottery_first.sort()
+
+        r = range(1, self.last[0])
+        lottery_last = random.sample(r, self.last[1])
+        lottery_last.sort()
+
+        self.item["first"] = lottery_first
+        self.item["last"] = lottery_last
 
 
-def createItem():
-    """创建一注彩票"""
-    lottery_36 = range(1, 36)
-    lottery_first = random.sample(lottery_36, 5)
-    lottery_first.sort()
+# 双色球
+class ShuangSeQiu(Lotto):
+    def __init__(self):
+        self.first = (34, 6)
+        self.last = (17, 1)
+        super().__init__(self.first, self.last)    
 
-    lottery_12 = range(1, 13)
-    lottery_last = random.sample(lottery_12, 2)
-    lottery_last.sort()
-
-    return {"firt": lottery_first, "last": lottery_last}
+# 大乐透
+class DaLeTou(Lotto):
+    def __init__(self):
+        self.first = (36, 5)
+        self.last = (13, 2)
+        super().__init__(self.first, self.last)
 
 
 def createLotto(count=5):
     """创建count注彩票"""
     for i in range(count):
-        item = createItem()
-        output(item)
+        item = ShuangSeQiu()
+        print(item)
+
 
 def main():
-    createLotto(1)
+    createLotto(5)
+
 
 if __name__ == "__main__":
     main()
