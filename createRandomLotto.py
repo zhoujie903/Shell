@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 如果你需要不替换地（即不重复地）随机选择一个元素的样本，可以使用random.sample:
 
 import random
