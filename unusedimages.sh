@@ -2,6 +2,7 @@
 ##author: zhoujie<13456774460@139.com>
 ##查找xcdoe iOS APP项目xcassets中不再使用的图片
 ##这个sh依赖于ag命令：https://github.com/ggreer/the_silver_searcher
+##安装ag命令：brew install the_silver_searcher
 
 
 #得到图片名字列表 方法一
