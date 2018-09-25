@@ -4,6 +4,12 @@
 ##这个sh依赖于ag命令：https://github.com/ggreer/the_silver_searcher
 ##安装ag命令：brew install the_silver_searcher
 
+##解决思路：
+## 1. 列举出Assets.xcassets目录下所有的*.imageset
+## 2. 对上一步找出的每一个*.imageset[图片],都在所有工程文件中查找这个图片名字的字符串
+## 3. 如果所有工程文件中都不包含图片名字的字符串，则表示这个图片没有被使用
+## 4. 对拼接图片名字，没有处于，只给出警告
+
 
 #得到图片名字列表 方法一
 #################################################################################################
@@ -43,6 +49,7 @@
 #       suppress automatic printing of pattern space
 #-E
 
+## 1. 列举出Assets.xcassets目录下所有的*.imageset
 images=$(find .  -type d -name "*.imageset" | sed -n -E 's/(.*\/)//; s/(\.imageset$)//p;')
 #################################################################################################
 
@@ -64,6 +71,8 @@ progname=${0##*/} ## Get the name of the script without its path
 #                          (literal file/directory names also allowed)
 #--ignore-dir NAME    Alias for --ignore for compatibility with ack.
 
+## 2. 对上一步找出的每一个*.imageset[图片],都在所有工程文件中查找这个图片名字的字符串
+## 3. 如果所有工程文件中都不包含图片名字的字符串，则表示这个图片没有被使用
 time for i in $images; do
 	if ! ag -Q --case-sensitive --ignore $unusedImages --ignore $progname --ignore-dir "*.xcassets" "$i" './';
 	then
@@ -71,7 +80,9 @@ time for i in $images; do
 	fi
 done
 
+
 ##对误中代码块进行处理
+## 4. 对拼接图片名字，没有处于，只给出警告
 #########################################################
 printf "请注意误查找:[UIImage imageNamed:[NSString stringWithFormat:\n" >> $unusedImages
 time ag -o --ignore $progname 'imageNamed.+Format.+"' './' | sed -n -E 's/(.*@")(.*)(")/\2/p' | sort -u >> $unusedImages
