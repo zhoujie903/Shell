@@ -9,6 +9,7 @@
 * [create_no_migu_phone.sh](http://www.jianshu.com/p/f67504ea109d)
 * [parseAddress.sh](http://www.jianshu.com/p/d97006697c22)
 * [unusedimages.sh](http://www.jianshu.com/p/98d6344316e0)
+* dsresign是《Advanced Apple Debugging & Reverse Engineering》Chapter 20: Code Signing里附带的代码，用来重签名App
 
 `create_no_migu_phone_node.sh`：
 
