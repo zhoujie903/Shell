@@ -4,7 +4,7 @@
 
 
 ##调试开关
-#set -x
+#set -eux
 
 #必须先声明
 #declare -A dic

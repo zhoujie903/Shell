@@ -21,6 +21,7 @@ else
 	echo "no ipa:" ${IPA_PATH}
 fi
 
+##-F, --form CONTENT  Specify HTTP multipart POST data (H)
 curl -F "file=@$(echo ${IPA_PATH})" -F "_api_key=${apiKey}" -F "buildUpdateDescription=${description}" https://www.pgyer.com/apiv2/app/upload
 
 echo "Done"

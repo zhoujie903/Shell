@@ -3,6 +3,8 @@
 ##这个脚本的作用是：生成咪咕彩漫的xxxxxxxx|xxxxxxxx格式的通信录文件，并排除咪咕号码
 
 ##调试开关
+# -u  Treat unset variables as an error when substituting.
+# -x  Print commands and their arguments as they are executed.
 #set -eux
 
 readonly randSortedFile=sorted_rand.txt

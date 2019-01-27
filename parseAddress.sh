@@ -3,7 +3,7 @@
 ##用来把友盟中的错误地址转换为符号
 
 ##调试开关
-#set -x
+#set -eux
 
 progname=${0##*/} ## Get the name of the script without its path
 folder=${0%/*}
