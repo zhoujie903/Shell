@@ -38,6 +38,9 @@ king_daily_luckydraw='https://king.hddgood.com/king_api/v1/king/daily_luckydraw'
 
 # 接口coin/lucky_draw   大转盘Go并收集金币   
 coin_lucky_draw='https://king.hddgood.com/king_api/v1/coin/lucky_draw'
+
+# 接口coin/lucky_draw_extra   大转盘达到5、10、15、20次时收集金币
+coin_lucky_extra='https://king.hddgood.com/king_api/v1/coin/lucky_draw_extra'
 # ------------------------------------------------
 
 
@@ -76,6 +79,20 @@ coin_lucky() {
     echo ''   
 }
 
+coin_lucky_extra() {
+    # 大转盘达到5、10、15、20次时收集金币
+    # coin_lucky(1:uid, 2:A_Token_Header, 3:Cookie, 4:index)
+    # index的值：0, 1, 2, 3
+
+    echo "大转盘Go ${1} 额外${4}"
+
+    curl -H "${HOST}" -H "${ACCEPT}" -H "${Accept_Language}" -H "${Origin}" -H "${User_Agent}" -H "${Referer}" \
+    -H "${2}" \
+    -H "${3}" \
+    --data "uid=${1}&index=${4}" --compressed "${coin_lucky_extra}"
+    echo ''
+}
+
 helper_Sign_and_Coin_lucky() {
     # 辅助方法
     # (1:uid, 2:A_Token_Header, 3:Cookie) 
@@ -85,6 +102,22 @@ helper_Sign_and_Coin_lucky() {
 }
 
 
-helper_Sign_and_Coin_lucky "${UUID_13456774460}" "${A_Token_Header_13456774460}" "${Cookie_13456774460}"
+uuids=("${UUID_13456774460}" "${UUID_19965412404}")
+tokens=("${A_Token_Header_13456774460}" "${A_Token_Header_19965412404}")
+cookies=("${Cookie_13456774460}" "${Cookie_19965412404}")
 
-helper_Sign_and_Coin_lucky "${UUID_19965412404}" "${A_Token_Header_19965412404}" "${Cookie_19965412404}"
+
+for ((i=0; i<${#uuids[@]}; i++))
+do
+    helper_Sign_and_Coin_lucky "${uuids[i]}" "${tokens[i]}" "${cookies[i]}"
+done
+
+
+for ((i=0; i<${#uuids[@]}; i++))
+do
+    for index in {0..3}
+    do
+        coin_lucky_extra "${uuids[i]}" "${tokens[i]}" "${cookies[i]}" "${index}"    
+    done
+done
+
